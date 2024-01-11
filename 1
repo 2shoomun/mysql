@@ -1,0 +1,54 @@
+#1.a Extract date from text file using Python regular expression?
+
+import re
+#Open the file that you want to search
+f = open("doc.txt", "r")
+#Will contain the entire content of the file as a string
+content = f.read()
+#The regex pattern that we created
+pattern = "\d{2}[/-]\d{2}[/-]\d{4}"
+#Will return all the strings that are matched
+dates = re.findall(pattern, content)
+for date in dates:
+    if "-" in date:
+        day, month, year = map(int, date.split("-"))
+    else:
+        day, month, year = map(int, date.split("/"))
+    if 1 <= day <= 31 and 1 <= month <= 12:
+        print(date)
+f.close()
+
+#b. Write a program to Perform Preprocessing (Tokenization, Stop Word Removal and Stemming) of Text.
+
+import nltk
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+from nltk.tokenize import word_tokenize, sent_tokenize
+
+# Download NLTK resources if not already downloaded
+nltk.download('punkt')
+nltk.download('stopwords')
+
+# Sample text
+text = "This is a sample text for tokenization, stop word removal, and stemming. It will be preprocessed."
+
+# Tokenization
+tokens = word_tokenize(text)
+
+# Stop word removal
+stop_words = set(stopwords.words('english'))
+filtered_tokens = [word for word in tokens if word.lower() not in stop_words]
+
+# Stemming using Porter Stemmer
+stemmer = PorterStemmer()
+stemmed_tokens = [stemmer.stem(word) for word in filtered_tokens]
+
+# Print the results
+print("Original Text:")
+print(text)
+print("\nTokenized Text:")
+print(tokens)
+print("\nText after Stop Word Removal:")
+print(filtered_tokens)
+print("\nText after Stemming:")
+print(stemmed_tokens)
