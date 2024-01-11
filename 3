@@ -1,0 +1,40 @@
+#3a a. Write a program to plot the graph with the most frequently distributed word in the given text.
+
+import matplotlib.pyplot as plt
+from collections import Counter
+
+# Sample text
+text = "This is a sample text for plotting the most frequent word. This is a simple example."
+
+# Tokenize the text into words
+words = text.split()
+
+# Count the frequency of each word
+word_count = Counter(words)
+
+# Find the most frequent word
+most_common_word, most_common_count = word_count.most_common(1)[0]
+
+# Create a bar plot
+plt.bar([most_common_word], [most_common_count])
+plt.xlabel("Words")
+plt.ylabel("Frequency")
+plt.title(f"Most Frequent Word: '{most_common_word}'")
+plt.show()
+
+
+#b. Write a Python program to split a string of words separated by commas and spaces into two lists, words and separators.
+
+
+import re
+
+# Input string
+input_string = "The colors in my studyroom are blue, green, and yellow."
+
+# Split the string into words and separators
+words = re.split(r'[\s,]+', input_string)
+separators = re.findall(r'[\s,]+', input_string)
+
+# Print the result as two lists
+result = [words, separators]
+print(result)
