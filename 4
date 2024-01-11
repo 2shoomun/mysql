@@ -1,0 +1,43 @@
+#4a Python program to extract all the numbers from a file and compute their sum using regular expressions:
+
+
+import re
+
+# Function to extract numbers and compute their sum from a file
+def extract_numbers_and_sum(file_path):
+    with open(file_path, 'r') as file:
+        text = file.read()
+
+        # Use regular expression to find all numbers in the text
+        numbers = re.findall(r'\d+', text)
+
+        # Convert the numbers from strings to integers and compute their sum
+        numbers = [int(num) for num in numbers]
+        total_sum = sum(numbers)
+
+        return total_sum
+
+# Replace 'file.txt' with the path to your file
+file_path = 'file.txt'
+result = extract_numbers_and_sum(file_path)
+print(result)
+
+
+#b. b. Write a program to extract specific patterns from a given sample sentence using regular expression-based chunking.
+
+
+import re
+
+# Sample sentence
+sample_sentence = "The quick brown fox jumps over the lazy dog."
+
+# Define a regular expression pattern to extract specific patterns (e.g., words starting with 'q')
+pattern = r'\bq\w*\b'
+
+# Use regular expression to find all matching patterns in the sentence
+matches = re.findall(pattern, sample_sentence, flags=re.IGNORECASE)
+
+# Print the extracted patterns
+print("Extracted Patterns:")
+for match in matches:
+    print(match)
