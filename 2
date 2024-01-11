@@ -1,0 +1,51 @@
+
+
+#2a. Write a Python program to create a list with n values. The list of integers with exactly two occurrences of nineteen and at least three occurrences of five.
+
+def check_list(lst, n, m):
+    count_19 = lst.count(19)
+    count_5 = lst.count(5)
+    
+    return count_19 == n and count_5 >= m
+
+# Sample inputs
+input1 = [19, 19, 15, 5, 3, 5, 5, 2]
+input2 = [19, 15, 15, 5, 3, 3, 5, 2]
+input3 = [19, 19, 5, 5, 5, 5, 5]
+
+# Check the conditions for each input and print the result
+print(check_list(input1, 2, 3))  # Output: True
+print(check_list(input2, 2, 3))  # Output: False
+print(check_list(input3, 2, 3))  # Output: True
+
+#b. Write a program to implement N-Gram Model from the given text, excluding the stop words
+
+import nltk
+from nltk.corpus import stopwords
+from nltk import ngrams
+
+# Sample text
+text = "This is a sample text for implementing an N-Gram model. It should exclude common stopwords."
+
+# Tokenize the text
+tokens = nltk.word_tokenize(text)
+
+# Define stop words
+stop_words = set(stopwords.words('english'))
+
+# Remove stop words from tokens
+filtered_tokens = [word for word in tokens if word.lower() not in stop_words]
+
+# Function to generate n-grams
+def generate_ngrams(text, n):
+    n_grams = ngrams(text, n)
+    return [' '.join(gram) for gram in n_grams]
+
+# Set the desired value of 'n' for the N-Gram model
+n = 2
+
+# Generate and print n-grams
+ngram_list = generate_ngrams(filtered_tokens, n)
+print(f"{n}-Grams:")
+for ngram in ngram_list:
+    print(ngram)
