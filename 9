@@ -1,0 +1,35 @@
+import nltk
+from nltk.util import ngrams
+from collections import Counter
+
+# Sample documents
+documents = [
+    "This is the first document. It contains some text.",
+    "This is the second document. It also contains some text.",
+    "And this is the third document. It contains different text."
+]
+
+# Tokenize and preprocess the documents
+tokenized_documents = [nltk.word_tokenize(document.lower()) for document in documents]
+
+# Function to generate and count bi-grams from a list of words
+def count_bi_grams(word_list):
+    bi_grams = list(ngrams(word_list, 2))
+    return Counter(bi_grams)
+
+# Initialize a Counter to store bi-gram frequencies
+bi_gram_frequency = Counter()
+
+# Count bi-grams in each document and update the overall frequency
+for doc in tokenized_documents:
+    bi_gram_frequency.update(count_bi_grams(doc))
+
+# Display the number of unique bi-grams
+num_unique_bi_grams = len(bi_gram_frequency)
+print(f"Number of unique bi-grams: {num_unique_bi_grams}")
+
+# Display the top 5 most common bi-grams
+top_5_bi_grams = bi_gram_frequency.most_common(5)
+print("\nTop 5 Most Common Bi-grams:")
+for bi_gram, frequency in top_5_bi_grams:
+    print(f"{bi_gram}: {frequency}")
