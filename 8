@@ -1,0 +1,28 @@
+#8 Write a program to analyze the different types of Stemmers and Lemmatizer
+
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer, LancasterStemmer, SnowballStemmer, WordNetLemmatizer
+# define an method
+def morphological_analysis(sentence):
+    words = word_tokenize(sentence)
+    # Porter Stemmer
+    porter_stemmer = PorterStemmer()
+    porter_stems = [porter_stemmer.stem(word) for word in words]
+    # Lancaster Stemmer
+    lancaster_stemmer = LancasterStemmer()
+    lancaster_stems = [lancaster_stemmer.stem(word) for word in words]
+    # Snowball Stemmer
+    snowball_stemmer = SnowballStemmer('english')
+    snowball_stems = [snowball_stemmer.stem(word) for word in words]
+    # WordNet Lemmatizer
+    lemmatizer = WordNetLemmatizer()
+    lemmas = [lemmatizer.lemmatize(word) for word in words]
+    print("Original Sentence:", sentence)
+    print("\nPorter Stems:", porter_stems)
+    print("Lancaster Stems:", lancaster_stems)
+    print("Snowball Stems:", snowball_stems)
+    print("WordNet Lemmas:", lemmas)
+# Example usage
+sentence = "Morphological analysis is important for natural language processing."
+morphological_analysis(sentence)
