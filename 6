@@ -1,0 +1,49 @@
+#6a
+
+import re
+
+text = ''' Follow our leader Elon musk on twitter here: https://twitter.com/elonmusk, more
+information on Tesla's products can be found at https://www.tesla.com/. Also here are leading
+influencers for tesla related news,
+https://twitter.com/teslarati
+https://twitter.com/dummy_tesla
+https://twitter.com/dummy_2_tesla
+'''
+pattern = 'https://twitter\.com/([a-zA-Z0-9_]+)'
+
+re.findall(pattern, text)
+
+
+#b
+
+import matplotlib.pyplot as plt
+from collections import Counter
+import string
+import nltk
+from nltk.corpus import stopwords
+
+# Sample text
+text = "This is a sample text for plotting the most frequent word. This is a simple example."
+
+# Tokenize the text into words
+words = nltk.word_tokenize(text)
+
+# Remove punctuation and convert to lowercase
+words = [word.lower() for word in words if word not in string.punctuation]
+
+# Remove stop words
+stop_words = set(stopwords.words('english'))
+filtered_words = [word for word in words if word not in stop_words]
+
+# Count the frequency of each word
+word_count = Counter(filtered_words)
+
+# Find the most frequent word
+most_common_word, most_common_count = word_count.most_common(1)[0]
+
+# Create a bar plot
+plt.bar([most_common_word], [most_common_count])
+plt.xlabel("Words")
+plt.ylabel("Frequency")
+plt.title(f"Most Frequent Word: '{most_common_word}'")
+plt.show()
