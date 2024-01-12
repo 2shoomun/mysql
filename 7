@@ -1,0 +1,38 @@
+#7 Write a program to demonstrate Morphological Analysis and Perform Lemmatization based on the Parts of Speech on the given text.
+
+import nltk
+from nltk.corpus import wordnet
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize, sent_tokenize, pos_tag
+
+# Sample text
+text = "I am running in the park and playing with my friends. Running is fun!"
+
+# Tokenize the text into words
+words = word_tokenize(text)
+
+# Perform part-of-speech tagging
+pos_tags = pos_tag(words)
+
+# Initialize the WordNet Lemmatizer
+lemmatizer = WordNetLemmatizer()
+
+# Function to convert POS tags to WordNet POS tags
+def get_wordnet_pos(treebank_tag):
+    if treebank_tag.startswith('J'):
+        return wordnet.ADJ
+    elif treebank_tag.startswith('V'):
+        return wordnet.VERB
+    elif treebank_tag.startswith('N'):
+        return wordnet.NOUN
+    elif treebank_tag.startswith('R'):
+        return wordnet.ADV
+    else:
+        return wordnet.NOUN  # Default to noun if not recognized
+
+# Lemmatize words based on their POS tags
+lemmatized_words = [lemmatizer.lemmatize(word, get_wordnet_pos(pos_tag)) for word, pos_tag in pos_tags]
+
+# Print the original words and their lemmatized forms
+for original_word, lemmatized_word in zip(words, lemmatized_words):
+    print(f"{original_word} => {lemmatized_word}")
