@@ -1,0 +1,50 @@
+
+import nltk
+from nltk.tokenize import word_tokenize, sent_tokenize
+from nltk.corpus import wordnet
+from nltk import pos_tag, RegexpParser
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+# Sample sentence
+sentence = "The beautiful and sunny day made me feel happy and relaxed."
+
+# Tokenize the sentence into words
+words = word_tokenize(sentence)
+
+# Perform part-of-speech tagging
+pos_tags = pos_tag(words)
+
+# Define a grammar for chunking: Noun Phrases (NP) and Adjective Phrases (ADJP)
+grammar = r"""
+    NP: {<DT>?<JJ>*<NN.*>+}  # Noun Phrases
+    ADJP: {<JJ.*>+}          # Adjective Phrases
+"""
+
+# Create a chunk parser with the grammar
+chunk_parser = RegexpParser(grammar)
+
+# Parse the sentence and extract chunks
+parsed_sentence = chunk_parser.parse(pos_tags)
+
+# Initialize a SentimentIntensityAnalyzer
+sid = SentimentIntensityAnalyzer()
+
+# Initialize variables to keep track of adjectives and their sentiment scores
+adjectives = []
+sentiment_scores = []
+
+# Iterate through the parsed tree to extract adjectives
+for subtree in parsed_sentence.subtrees():
+    if subtree.label() == 'ADJP':
+        adjective_phrase = [word for word, tag in subtree.leaves()]
+        adjectives.extend(adjective_phrase)
+        # Calculate sentiment score for the adjective phrase
+        sentiment_score = sid.polarity_scores(' '.join(adjective_phrase))
+        sentiment_scores.append(sentiment_score['compound'])
+
+# Calculate the overall sentiment score for the extracted adjectives
+overall_sentiment_score = sum(sentiment_scores) / len(sentiment_scores) if sentiment_scores else 0
+
+# Print the extracted adjectives and overall sentiment score
+print("Extracted Adjectives:", adjectives)
+print("Overall Sentiment Score:", overall_sentiment_score)
